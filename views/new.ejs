@@ -1,14 +1,15 @@
 <%- include ("./partials/header") %>
 <div class="container">
-<h1 style="text-align: center">Make a new post!</h1>
-<div style="width:10%; margin: 30px auto;">
-<form>
-    <input placeholder="Name of piece" type="text" name="name">
-    <input placeholder="Year" type="text" name="year">
-    <input placeholder="Medium" type="text" name="medium">
-    <input placeholder="Source or URL" type="text" name="source">
-    <input placeholder="Description" type="textarea" name="desc">
-</form>
-</div>
+    <h1 style="text-align: center">Make a new post!</h1>
+        <div style="width:10%; margin: 30px auto;">
+            <form action="/blogs" method="POST" id="post-form">
+                <input placeholder="Name of piece" type="text" name="name"/>
+                <input placeholder="Year" type="text" name="year"/>
+                <input placeholder="Medium" type="text" name="medium"/>
+                <input placeholder="Source or URL" type="text" name="source"/>
+                <input placeholder="Description" type="textarea" name="desc"/>
+            </form>
+            <button type="submit" form="post-form">Post</button>
+        </div>
 </div>
 <%- include ("./partials/footer") %>

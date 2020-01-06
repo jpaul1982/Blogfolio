@@ -1,46 +1,33 @@
 const express = require("express"),
   app = express(),
   PORT = process.env.PORT || 3000,
-  mongoose = require("mongoose");
+  bodyParser = require("body-parser"),
+  Blog = require("./models/blog"),
+  mongoose = require("mongoose"); // mongoose is an ODM(object data mapper, this allows us to interact with our DB using JS)
+  methodOverride = require("method-override");
 
 mongoose.connect("mongodb://localhost:27017/blogfolio", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.set("view engine", "ejs");
-
-let blogSchema = new mongoose.Schema({
-  name: String,
-  year: Number,
-  medium: String,
-  source: String,
-  description: String
-});
-
-let Blog = mongoose.model("Blog", blogSchema);
-
-let piece = new Blog({
-  name: "Witches Sabbath",
-  year: 1798,
-  medium: "Oil on Canvas",
-  source:
-    "https://render.fineartamerica.com/images/rendered/default/poster/8/10/break/images/artworkimages/medium/1/the-witches-sabbath-goya.jpg",
-  description: "A really cool painting!"
-});
-
-piece.save((err, piece) => {
-  if (err) {
-    console.log("Something went wrong", err);
-  } else {
-    console.log("New blog saved to database");
-    console.log(piece);
-  }
-});
+app.use(methodOverride("_method"));
 
 //////// Index Routes ///////////
 app.get("/", (req, res) => {
   res.render("index");
+});
+app.get("/blogs", (req, res) => {
+    let blogs = [
+        {name: "name", year: 1900},
+        {name: "name", year: 1900},
+        {name: "name", year: 1900}
+    ]
+  res.render("blogs", {blogs:blogs});
 });
 //////// New Routes ///////////
 app.get("/new_post", (req, res) => {
@@ -50,7 +37,30 @@ app.get("/new_post", (req, res) => {
 //////// Show Routes ////////////
 
 //////// Create Routes //////////
-app.post("/", (req, res) => {});
+
+
+app.post("/blogs", function (req, res){
+
+    console.log("REQ DOT", req.body);
+  let name = req.body.name;
+  
+  
+  let year = req.body.year;
+  let medium = req.body.medium;
+  let source = req.body.source;
+  let description = req.body.desc;
+  let newBlog = {name:name, year:year, medium:medium, source:source, description:description};
+
+  Blog.create(newBlog, (err, blog) => {
+    if (err) {
+      console.log("Something went wrong");
+      console.log(err);
+    } else {
+      console.log("Success! New Blog posted to Mongo DB");
+      console.log(blog);
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);
