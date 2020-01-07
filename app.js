@@ -20,7 +20,7 @@ app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 
 //////// Index Routes ///////////
-app.get("/", (req, res) => {
+app.get("/index", (req, res) => {
   Blog.find({}, (err, allBlogs) => {
     if (err) {
       console.log("Something went wrong:", err);
@@ -31,9 +31,35 @@ app.get("/", (req, res) => {
     }
   });
 });
+// Landing Page //
+// app.get("/", (req, res) => {
+//   Blog.find().sort({_id:-1}).limit(1),(err, newest) => {
+// if (err) {
+//   console.log("Something went wrong");
+//   console.log(err);
+//   } else {
+//   res.render("landing", {
+//     newest: newest
+//   })
+// }
+//   }
+//   res.render("landing")
+// });
 
-app.get("/blogs", (req, res) => {
+app.get("/", (req, res) => {
+let query = Blog.find().sort({_id:-1}).limit(1);
+query.exec((err, newest) => {
+  if (err) {
+    console.log("Error", err);
+    
+  } else {
+    console.log("Newest:", newest);
+    
+    res.render("landing", {newest:newest})
+  }
+})
 });
+
 //////// New Routes ///////////
 app.get("/new_post", (req, res) => {
   res.render("new");
@@ -66,6 +92,7 @@ app.post("/blogs", function(req, res) {
     } else {
       console.log("Success! New Blog posted to Mongo DB");
       console.log(blog);
+      res.redirect("/index");
     }
   });
 });
