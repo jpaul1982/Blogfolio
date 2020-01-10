@@ -1,14 +1,8 @@
 <%- include ("./partials/header") %>
 <h1>This is the landing page.  Enjoy it.</h1>
-
-<% newest.forEach(function(newest) { %>
-
-   <img width="300px" src="<%=newest.source%>" />
-    <h4> <%=newest.name%> </h4>
-    <h4> <%=newest.year%> </h4>
-    <h4> <%=newest.medium%> </h4>
-    <h4> <%=newest.description%> </h4>
-    
-    <% }) %>
-
+<img width="300px" src="<%=newest[0].source%>" />
+<h4> <%=newest[0].name%> </h4>
+<h4> <%=newest[0].year%> </h4>
+<h4> <%=newest[0].medium%> </h4>
+<h4> <%=newest[0].description%> </h4>
 <%- include ("./partials/footer") %>

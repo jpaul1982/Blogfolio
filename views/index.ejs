@@ -1,11 +1,22 @@
 <%- include ("./partials/header") %>
 <h1>View all of my posts.</h1>
-<% blogs.forEach(function(blog) { %>
+<!-- <% blogs.forEach(function(blog) { %>
     <img width="300px" src="<%=blog.source%>" />
     <h4> <%=blog.name%> </h4>
     <h4> <%=blog.year%> </h4>
     <h4> <%=blog.medium%> </h4>
     <h4> <%=blog.description%> </h4>
-    <% }) %>
+    <% }) %> -->
+    <% blogs.forEach(function(blog) { %>
+    <div class="card" style="width: 18rem;">
+        <img src="<%=blog.source%>" class="card-img-top" alt="Blog post with image.">
+        <div class="card-body">
+          <h4 class="card-title"><%=blog.name%></h4>
+          <h5 class="card-title"><%=blog.year%></h5>
+          <h5 class="card-title"><%=blog.medium%></h5>
+          <p class="card-text"><%=blog.description%></p>
+        </div>
+      </div>
+      <% }) %>
     
 <%- include ("./partials/footer") %>

@@ -31,33 +31,21 @@ app.get("/index", (req, res) => {
     }
   });
 });
-// Landing Page //
-// app.get("/", (req, res) => {
-//   Blog.find().sort({_id:-1}).limit(1),(err, newest) => {
-// if (err) {
-//   console.log("Something went wrong");
-//   console.log(err);
-//   } else {
-//   res.render("landing", {
-//     newest: newest
-//   })
-// }
-//   }
-//   res.render("landing")
-// });
 
+//////// Show Routes ///////////
 app.get("/", (req, res) => {
-let query = Blog.find().sort({_id:-1}).limit(1);
-query.exec((err, newest) => {
-  if (err) {
-    console.log("Error", err);
-    
-  } else {
-    console.log("Newest:", newest);
-    
-    res.render("landing", {newest:newest})
-  }
-})
+  let query = Blog.find()
+    .sort({ _id: -1 })
+    .limit(1);
+  query.exec((err, newest) => {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      console.log("Newest:", newest);
+
+      res.render("landing", { newest: newest });
+    }
+  });
 });
 
 //////// New Routes ///////////
@@ -65,14 +53,10 @@ app.get("/new_post", (req, res) => {
   res.render("new");
 });
 
-//////// Show Routes ////////////
-
 //////// Create Routes //////////
-
 app.post("/blogs", function(req, res) {
   console.log("REQ DOT", req.body);
   let name = req.body.name;
-
   let year = req.body.year;
   let medium = req.body.medium;
   let source = req.body.source;
@@ -84,7 +68,6 @@ app.post("/blogs", function(req, res) {
     source: source,
     description: description
   };
-
   Blog.create(newBlog, (err, blog) => {
     if (err) {
       console.log("Something went wrong");
@@ -93,6 +76,18 @@ app.post("/blogs", function(req, res) {
       console.log("Success! New Blog posted to Mongo DB");
       console.log(blog);
       res.redirect("/index");
+    }
+  });
+});
+
+//////// Edit Routes //////////
+app.get("/:id/edit", (req, res) => {
+  Blog.findById(req.params.id, (err, foundBlog) => {
+    if (err) {
+      console.log("Error", err);
+      res.redirect("back");
+    } else {
+      res.render("blog/edit", { foundBlog: foundBlog });
     }
   });
 });
