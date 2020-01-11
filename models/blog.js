@@ -10,7 +10,13 @@ const blogSchema = new mongoose.Schema({
     year: Number,
     medium: String,
     source: String,
-    description: String
+    description: String,
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Comment"
+      }
+    ]
   });
   
   module.exports = mongoose.model("Blog", blogSchema);
