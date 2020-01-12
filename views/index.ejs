@@ -7,7 +7,8 @@
           <h4 class="card-title"><%=blog.name%></h4>
           <h5 class="card-title"><%=blog.year%></h5>
           <h5 class="card-title"><%=blog.medium%></h5>
-          <p class="card-text"><%=blog.description%></p>
+          <a href="/blog/<%= blog._id %>">View Blog</a>
+          <br>
           <a href="/comments/<%= blog._id %>">Leave a Comment!</a>
         </div>
       </div>

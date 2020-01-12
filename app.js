@@ -22,7 +22,9 @@ app.use(methodOverride("_method"));
 
 //////// Index Routes ///////////
 app.get("/index", (req, res) => {
-  Blog.find({}, (err, allBlogs) => {
+  let query = Blog.find()
+  .sort({ _id: -1 });
+  query.exec({}, (err, allBlogs) => {
     if (err) {
       console.log("Something went wrong:", err);
     } else {
@@ -33,8 +35,13 @@ app.get("/index", (req, res) => {
   });
 });
 
-//////// Show Routes ///////////
+// - Root Route - //
 app.get("/", (req, res) => {
+  res.render("landing")
+});
+
+//////// Show Routes ///////////
+app.get("/newest", (req, res) => {
   let query = Blog.find()
     .sort({ _id: -1 })
     .limit(1);
@@ -42,10 +49,22 @@ app.get("/", (req, res) => {
     if (err) {
       console.log("Error", err);
     } else {
-      res.render("landing", { newest: newest });
+      res.render("newest", { newest: newest });
     }
   });
 });
+
+app.get("/blog/:id", (req, res) => {
+  Blog.findById(req.params.id).populate("comments").exec((err, foundBlog) => {
+    if (err) {
+      console.log("Something went wrong:", err);
+      } else {
+        console.log("foundBlog", foundBlog.comments[0]);
+        res.render("blog", {blog:foundBlog})
+    }
+  })
+  
+})
 
 //////// New Routes ///////////
 app.get("/new_post", (req, res) => {
