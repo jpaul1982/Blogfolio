@@ -5,12 +5,13 @@ const express = require("express"),
   Blog = require("./models/blog"),
   Comment = require("./models/comments"),
   mongoose = require("mongoose"); // mongoose is an ODM(object data mapper, this allows us to interact with our DB using JS)
-methodOverride = require("method-override");
+  methodOverride = require("method-override");
 
 mongoose.connect("mongodb://localhost:27017/blogfolio", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+mongoose.set('useFindAndModify', false);
 app.use(
   bodyParser.urlencoded({
     extended: true
@@ -20,7 +21,12 @@ app.use(
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 
-//////// Index Routes ///////////
+// - Root Route - //
+app.get("/", (req, res) => {
+  res.render("landing")
+});
+
+//////// Index ///////////
 app.get("/index", (req, res) => {
   let query = Blog.find()
   .sort({ _id: -1 });
@@ -35,12 +41,7 @@ app.get("/index", (req, res) => {
   });
 });
 
-// - Root Route - //
-app.get("/", (req, res) => {
-  res.render("landing")
-});
-
-//////// Show Routes ///////////
+//////// Show ///////////
 app.get("/newest", (req, res) => {
   let query = Blog.find()
     .sort({ _id: -1 })
@@ -59,14 +60,13 @@ app.get("/blog/:id", (req, res) => {
     if (err) {
       console.log("Something went wrong:", err);
       } else {
-        console.log("foundBlog", foundBlog.comments[0]);
         res.render("blog", {blog:foundBlog})
     }
   })
   
 })
 
-//////// New Routes ///////////
+//////// New ///////////
 app.get("/new_post", (req, res) => {
   res.render("new");
 });
@@ -83,7 +83,7 @@ app.get("/comments/:id", (req, res) => {
   });
 });
 
-//////// Create Routes //////////
+//////// Create //////////
 app.post("/blogs", function(req, res) {
   let name = req.body.name;
   let year = req.body.year;
@@ -131,17 +131,32 @@ app.post("/comments/:id", (req, res) => {
   });
 });
 
-//////// Edit Routes //////////      not working yet
-// app.get("/:id/edit", (req, res) => {
-//   Blog.findById(req.params.id, (err, foundBlog) => {
-//     if (err) {
-//       console.log("Error", err);
-//       res.redirect("back");
-//     } else {
-//       res.render("blog/edit", { foundBlog: foundBlog });
-//     }
-//   });
-// });
+////// Edit //////////   
+app.get("/edit_blog/:id", (req, res) => {
+  Blog.findById(req.params.id, (err, foundBlog) => {
+    if (err) {
+      console.log("Error", err);
+      res.redirect("back");
+    } else {
+      console.log(foundBlog);
+      res.render("edit", { foundBlog: foundBlog });
+    }
+  });
+});
+
+////// Update //////////  
+app.put("/blogs/:id", (req, res) => {
+  Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, foundBlog) => {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      console.log("Update route hit!!");
+      console.log(req.body.blog);
+      res.redirect("/blog/" + foundBlog._id);
+    }
+    
+  });
+});
 
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);

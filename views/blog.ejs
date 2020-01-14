@@ -7,16 +7,15 @@
         <h4> <%=blog.year%> </h4>
         <h4> <%=blog.medium%> </h4>
         <% if (blog.comments.length <= 0) { %>
-        <em>There are no commnets on this blog.</em> 
+        <em>There are no comments on this blog.</em> 
     <% } else { %>
         <% blog.comments.forEach((comment) => { %>
             <h5> <%=comment.text%> </h5>
         <% }) }%>
-
-        
-
     </div>
   </div>
+  <p> <%=blog.description%> </p>
+  <a href="/edit_blog/<%=blog._id %>">Edit this blog</a>
   
 
 
