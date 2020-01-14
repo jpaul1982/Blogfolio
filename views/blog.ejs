@@ -6,11 +6,18 @@
         <h4> <%=blog.name%> </h4>
         <h4> <%=blog.year%> </h4>
         <h4> <%=blog.medium%> </h4>
-        <h4> <%=blog.comments[0].text%> </h4>
-        <p> <%=blog.description%> </p>
+        <% if (blog.comments.length <= 0) { %>
+        <em>There are no commnets on this blog.</em> 
+    <% } else { %>
+        <% blog.comments.forEach((comment) => { %>
+            <h5> <%=comment.text%> </h5>
+        <% }) }%>
+
+        
 
     </div>
   </div>
+  
 
 
 <%- include ("./partials/footer") %>
