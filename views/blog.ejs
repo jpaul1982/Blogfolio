@@ -13,6 +13,9 @@
             <h5> <%=comment.text%> </h5>
         <% }) }%>
     </div>
+    <form id="delete-form" action="/blog/<%=blog._id%>?_method=DELETE" method="POST">
+        <button>Delete</button>
+    </form>
   </div>
   <p> <%=blog.description%> </p>
   <a href="/edit_blog/<%=blog._id %>">Edit this blog</a>

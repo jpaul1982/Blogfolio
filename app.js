@@ -158,6 +158,20 @@ app.put("/blogs/:id", (req, res) => {
   });
 });
 
+////// Delete //////////  
+app.delete("/blog/:id", (req, res) => {
+  Blog.findByIdAndRemove(req.params.id, (err) =>{
+    if (err) {
+      console.log("Something went wrong:", err);
+      
+    } else {
+      console.log("Success, item deleted");
+      res.redirect("/index")
+      
+    }
+  })
+})
+
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);
 });
