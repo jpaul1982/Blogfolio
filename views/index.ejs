@@ -2,14 +2,14 @@
 <h1>View all of my posts.</h1>
     <% blogs.forEach(function(blog) { %>
     <div class="card" style="width: 18rem;">
-        <img src="<%=blog.source%>" class="card-img-top" alt="Blog post with image.">
         <div class="card-body">
           <h4 class="card-title"><%=blog.name%></h4>
+          <a href="/blog/<%= blog._id %>"><img src="<%=blog.source%>" class="card-img-top" alt="Blog post with image."></a>
           <h5 class="card-title"><%=blog.year%></h5>
           <h5 class="card-title"><%=blog.medium%></h5>
-          <a href="/blog/<%= blog._id %>">View Blog</a>
+          
           <br>
-          <a href="/comments/<%= blog._id %>">Leave a Comment!</a>
+          
         </div>
       </div>
       <% }) %>

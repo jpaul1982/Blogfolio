@@ -5,13 +5,13 @@ const express = require("express"),
   Blog = require("./models/blog"),
   Comment = require("./models/comments"),
   mongoose = require("mongoose"); // mongoose is an ODM(object data mapper, this allows us to interact with our DB using JS)
-  methodOverride = require("method-override");
+methodOverride = require("method-override");
 
 mongoose.connect("mongodb://localhost:27017/blogfolio", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-mongoose.set('useFindAndModify', false);
+mongoose.set("useFindAndModify", false);
 app.use(
   bodyParser.urlencoded({
     extended: true
@@ -23,13 +23,12 @@ app.use(methodOverride("_method"));
 
 // - Root Route - //
 app.get("/", (req, res) => {
-  res.render("landing")
+  res.render("landing");
 });
 
 //////// Index ///////////
 app.get("/index", (req, res) => {
-  let query = Blog.find()
-  .sort({ _id: -1 });
+  let query = Blog.find().sort({ _id: -1 });
   query.exec({}, (err, allBlogs) => {
     if (err) {
       console.log("Something went wrong:", err);
@@ -56,15 +55,16 @@ app.get("/newest", (req, res) => {
 });
 
 app.get("/blog/:id", (req, res) => {
-  Blog.findById(req.params.id).populate("comments").exec((err, foundBlog) => {
-    if (err) {
-      console.log("Something went wrong:", err);
+  Blog.findById(req.params.id)
+    .populate("comments")
+    .exec((err, foundBlog) => {
+      if (err) {
+        console.log("Something went wrong:", err);
       } else {
-        res.render("blog", {blog:foundBlog})
-    }
-  })
-  
-})
+        res.render("blog", { blog: foundBlog });
+      }
+    });
+});
 
 //////// New ///////////
 app.get("/new_post", (req, res) => {
@@ -124,14 +124,14 @@ app.post("/comments/:id", (req, res) => {
           comment.save();
           blog.comments.push(comment);
           blog.save();
-          res.redirect("/index");
+          res.redirect("/blog/" + blog._id);
         }
       });
     }
   });
 });
 
-////// Edit //////////   
+////// Edit //////////
 app.get("/edit_blog/:id", (req, res) => {
   Blog.findById(req.params.id, (err, foundBlog) => {
     if (err) {
@@ -144,7 +144,7 @@ app.get("/edit_blog/:id", (req, res) => {
   });
 });
 
-////// Update //////////  
+////// Update //////////
 app.put("/blogs/:id", (req, res) => {
   Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, foundBlog) => {
     if (err) {
@@ -154,23 +154,37 @@ app.put("/blogs/:id", (req, res) => {
       console.log(req.body.blog);
       res.redirect("/blog/" + foundBlog._id);
     }
-    
   });
 });
 
-////// Delete //////////  
+////// Destroy //////////
 app.delete("/blog/:id", (req, res) => {
-  Blog.findByIdAndRemove(req.params.id, (err) =>{
+  Blog.findByIdAndRemove(req.params.id, err => {
     if (err) {
       console.log("Something went wrong:", err);
-      
     } else {
       console.log("Success, item deleted");
-      res.redirect("/index")
-      
+      res.redirect("/index");
     }
-  })
-})
+  });
+});
+
+app.delete("/blog/:id/comments/:comment_id", (req, res) => {
+  
+  Comment.findByIdAndRemove(req.params.comment_id, err => {
+    if (err) {
+      
+      
+      console.log("Something went wrong:", err);
+    } else {
+      console.log("ReQdot:", req.params.comment_id);
+      console.log("ReQdot:", req.params.id);
+      console.log("Success, item deleted");
+      res.redirect("/blog/" + req.params.id);
+      // res.redirect("/index");
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);
