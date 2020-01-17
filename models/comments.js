@@ -7,6 +7,12 @@ mongoose.connect("mongodb://localhost:27017/blogfolio", {
 
 const commentSchema = new mongoose.Schema({
     text: String,
+    date: {
+      type: Date,
+      default: Date,
+    },
+
+      
   });
   
   module.exports = mongoose.model("Comment", commentSchema);

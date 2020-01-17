@@ -6,10 +6,7 @@ const express = require("express"),
   Comment = require("./models/comments"),
   mongoose = require("mongoose"); // mongoose is an ODM(object data mapper, this allows us to interact with our DB using JS)
 methodOverride = require("method-override");
-let moment = require('moment');
-let shortDateFormat = "ddd @ h:mmA"; // this is just an example of storing a date format once so you can change it in one place and have it propagate
-app.locals.moment = moment; // this makes moment available as a variable in every EJS page
-app.locals.shortDateFormat = shortDateFormat;
+
 
 mongoose.connect("mongodb://localhost:27017/blogfolio", {
   useNewUrlParser: true,
@@ -25,11 +22,10 @@ app.use(
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use((req, res, next) => {
-  res.locals.moment = require('moment');
-  
+  res.locals.moment = require("moment");
+
   next();
 });
-
 
 // - Root Route - //
 app.get("/", (req, res) => {
@@ -94,7 +90,6 @@ app.get("/comments/:id", (req, res) => {
 
 //////// Create //////////
 app.post("/blogs", function(req, res) {
-
   let name = req.body.name;
   let year = req.body.year;
   let medium = req.body.medium;
@@ -107,7 +102,7 @@ app.post("/blogs", function(req, res) {
     source: source,
     description: description
   };
-  Blog.create(newBlog,(err, blog) => {
+  Blog.create(newBlog, (err, blog) => {
     if (err) {
       console.log("Something went wrong");
       console.log(err);
@@ -120,19 +115,19 @@ app.post("/blogs", function(req, res) {
 });
 
 app.post("/comments/:id", (req, res) => {
-
   Blog.findById(req.params.id, (err, blog) => {
     if (err) {
       console.log("Something went wrong:", err);
     } else {
       console.log("BLOG", blog);
-
       let newComment = { comment: req.body.comment };
       Comment.create(newComment.comment, (err, comment) => {
         if (err) {
           console.log("Something went wrong:", err);
         } else {
           console.log("Success!  Comment Posted", comment);
+          console.log(comment.date.toLocaleDateString("en-US"));
+          
           comment.save();
           blog.comments.push(comment);
           blog.save();
