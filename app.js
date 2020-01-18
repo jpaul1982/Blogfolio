@@ -4,14 +4,31 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   Blog = require("./models/blog"),
   Comment = require("./models/comments"),
-  mongoose = require("mongoose"); // mongoose is an ODM(object data mapper, this allows us to interact with our DB using JS)
-methodOverride = require("method-override");
-
+  mongoose = require("mongoose"), // mongoose is an ODM(object data mapper, this allows us to interact with our DB using JS)
+  methodOverride = require("method-override"),
+  passport = require("passport"),
+  LocalStrategy = require("passport-local"),
+  User = require("./models/user");
 
 mongoose.connect("mongodb://localhost:27017/blogfolio", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
+
+/////// Passport Config ////////////
+app.use(
+  require("express-session")({
+    secret: "Facts over feelings.",
+    resave: false,
+    saveUninitialized: false
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 mongoose.set("useFindAndModify", false);
 app.use(
   bodyParser.urlencoded({
@@ -22,10 +39,44 @@ app.use(
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use((req, res, next) => {
-  res.locals.moment = require("moment");
-
+  res.locals.currentUser = req.user;
   next();
 });
+
+//////Regiser Route/////
+app.get("/register", (req, res) => {
+  res.render("register");
+});
+
+app.post("/register", (req, res) => {
+  let newUser = { username: req.body.username }; // creates new user in a variable using the "User" model
+  User.register(newUser, req.body.password, (err, user) => {
+    // .register is a method that handles the logic for storing the salted/hashed password.
+    if (err) {
+      console.log("Something went wrong:", err);
+      return res.render("register");
+    }
+    passport.authenticate("local")(req, res, () => { 
+      res.redirect("/newest");
+    });
+  });
+});
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+
+app.post("/login", passport.authenticate("local",  // passport.authenticate is a middleware method that will handle the authentication logic.  
+  {
+    successRedirect: "/index",
+    failureRedirect: "/login"
+  })
+);
 
 // - Root Route - //
 app.get("/", (req, res) => {
@@ -34,13 +85,15 @@ app.get("/", (req, res) => {
 
 //////// Index ///////////
 app.get("/index", (req, res) => {
+  console.log(req.user);
+  
   let query = Blog.find().sort({ _id: -1 });
   query.exec({}, (err, allBlogs) => {
     if (err) {
       console.log("Something went wrong:", err);
     } else {
       res.render("index", {
-        blogs: allBlogs
+        blogs: allBlogs,
       });
     }
   });
@@ -89,7 +142,7 @@ app.get("/comments/:id", (req, res) => {
 });
 
 //////// Create //////////
-app.post("/blogs", function(req, res) {
+app.post("/blogs", isLoggedIn, function(req, res) {
   let name = req.body.name;
   let year = req.body.year;
   let medium = req.body.medium;
@@ -114,7 +167,7 @@ app.post("/blogs", function(req, res) {
   });
 });
 
-app.post("/comments/:id", (req, res) => {
+app.post("/comments/:id", isLoggedIn, (req, res) => {
   Blog.findById(req.params.id, (err, blog) => {
     if (err) {
       console.log("Something went wrong:", err);
@@ -125,9 +178,9 @@ app.post("/comments/:id", (req, res) => {
         if (err) {
           console.log("Something went wrong:", err);
         } else {
-          console.log("Success!  Comment Posted", comment);
-          console.log(comment.date.toLocaleDateString("en-US"));
-          
+          console.log("Success!  Comment Posted", comment, req.user.username);
+          // comment.author.id = req.user._id;
+          comment.author.username = req.user.username;
           comment.save();
           blog.comments.push(comment);
           blog.save();
@@ -152,7 +205,7 @@ app.get("/edit_blog/:id", (req, res) => {
 });
 
 ////// Update //////////
-app.put("/blogs/:id", (req, res) => {
+app.put("/blogs/:id", isLoggedIn, (req, res) => {
   Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, foundBlog) => {
     if (err) {
       console.log("Error", err);
@@ -181,14 +234,20 @@ app.delete("/blog/:id/comments/:comment_id", (req, res) => {
     if (err) {
       console.log("Something went wrong:", err);
     } else {
-      console.log("ReQdot:", req.params.comment_id);
-      console.log("ReQdot:", req.params.id);
       console.log("Success, item deleted");
       res.redirect("/blog/" + req.params.id);
       // res.redirect("/index");
     }
   });
 });
+
+function isLoggedIn (req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  // req.flash("error", "You need to be logged in to do that.");
+  res.redirect("/login");
+};
 
 app.listen(PORT, () => {
   console.log("Listening on port: " + PORT);

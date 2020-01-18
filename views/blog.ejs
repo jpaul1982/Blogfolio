@@ -1,5 +1,4 @@
 <%- include ("./partials/header") %>
-<h1>Specific Blog</h1>
 <div class="card" style="width: 18rem;">
     <div class="card-body">
         <img src="<%=blog.source%>" class="card-img-top" alt="Blog post with image.">
@@ -11,14 +10,11 @@
     <% } else { %>
         <% blog.comments.forEach((comment) => { %>
             <h5> <%=comment.text%> </h5>
-            <em><%=comment.date.toLocaleString("en-US")%></em>
-            
-
-
-        
-            <form id="delete-form" action="/blog/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                <input type="submit" value="Delete Comment">
-            </form>
+            <p>Submitted by <%=comment.author.username%></p>
+            <em>On <%=comment.date.toLocaleString("en-US")%></em>
+        <form id="delete-form" action="/blog/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+            <input type="submit" value="Delete Comment">
+        </form>
         <% }) }%>
     </div>
     <a href="/comments/<%= blog._id %>">Leave a Comment!</a>
