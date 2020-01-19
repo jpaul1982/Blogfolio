@@ -7,24 +7,28 @@
         <h4> <%=blog.medium%> </h4>
         <% if (blog.comments.length <= 0) { %>
         <em>There are no comments on this blog.</em> 
-    <% } else { %>
+        <% } else { %>
         <% blog.comments.forEach((comment) => { %>
             <h5> <%=comment.text%> </h5>
             <p>Submitted by <%=comment.author.username%></p>
             <em>On <%=comment.date.toLocaleString("en-US")%></em>
+            <% if (currentUser && comment.author.id.equals(currentUser._id)) { %> 
         <form id="delete-form" action="/blog/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
             <input type="submit" value="Delete Comment">
         </form>
-        <% }) }%>
+        <% } %>
+        
     </div>
+    <% }) }%>
     <a href="/comments/<%= blog._id %>">Leave a Comment!</a>
+    <% if (currentUser && blog.author.id.equals(currentUser._id)) { %> 
     <form id="delete-form" action="/blog/<%=blog._id%>?_method=DELETE" method="POST">
         <button>Delete Blog</button>
     </form>
-  </div>
-  <p> <%=blog.description%> </p>
-  <a href="/edit_blog/<%=blog._id %>">Edit this blog</a>
-  
+    <% } %>
+</div>
+<p> <%=blog.description%> </p>
+<a href="/edit_blog/<%=blog._id %>">Edit this blog</a>
 
 
 <%- include ("./partials/footer") %>

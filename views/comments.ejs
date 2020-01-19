@@ -1,5 +1,5 @@
 <%- include ("./partials/header") %>
-<h1>Leave a Comment!</h1>
+<h1>Leave a Comment! (new)</h1>
 <div class="card" style="width: 18rem;">
     <img src="<%=blog.source%>" class="card-img-top" alt="Blog post with image.">
     <div class="card-body">
@@ -7,8 +7,7 @@
       <h5 class="card-title"><%=blog.year%></h5>
       <h5 class="card-title"><%=blog.medium%></h5>
       <h5 class="card-title"><%=blog.comment%></h5>
-
-    </div>
+</div>
   </div>
   <form action="/comments/<%= blog._id %>" method="POST" id="post-form">
     <input placeholder="Thoughts?" type="text" name="comment[text]"/><button type="submit" form="post-form">Post</button>
