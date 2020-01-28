@@ -1,17 +1,24 @@
 <%- include ("./partials/header") %>
-<h1>View all of my posts.</h1>
+<div class="container">
+  <div class=" container row">
+    <div class="col-lg-12"> 
+      <h2 id="index_subhead" style="text-align: center;">A catalogue of projects in art, design, and software development.</h2>
+    </div>
+  </div>
+  <div class="container row">
+   <div class="row" style="display:flex; flex-wrap:wrap;">
     <% blogs.forEach(function(blog) { %>
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h4 class="card-title"><%=blog.name%></h4>
-          <a href="/blog/<%= blog._id %>"><img src="<%=blog.source%>" class="card-img-top" alt="Blog post with image."></a>
-          <h5 class="card-title"><%=blog.year%></h5>
-          <h5 class="card-title"><%=blog.medium%></h5>
-          
-          <br>
-          
-        </div>
-      </div>
-      <% }) %>
+    <div class="item olive col-lg-3 col-md-6">
+      <a href="/blog/<%= blog._id %>"><img src="<%=blog.source%>" class="index_image" alt="Blog post with image."></a>
+      <i class="far fa-eye"></i>
+    </div>
+     <% }) %>
+    </div>
+  </div>
+</div>
+
+      
+
+      
     
 <%- include ("./partials/footer") %>

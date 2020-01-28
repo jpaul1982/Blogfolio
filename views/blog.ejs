@@ -1,34 +1,46 @@
 <%- include ("./partials/header") %>
-<div class="card" style="width: 18rem;">
-    <div class="card-body">
-        <img src="<%=blog.source%>" class="card-img-top" alt="Blog post with image.">
-        <h4> <%=blog.name%> </h4>
-        <h4> <%=blog.year%> </h4>
-        <h4> <%=blog.medium%> </h4>
-        <% if (blog.comments.length <= 0) { %>
-        <em>There are no comments on this blog.</em> 
-        <% } else { %>
-        <% blog.comments.forEach((comment) => { %>
-            <h5> <%=comment.text%> </h5>
-            <p>Submitted by <%=comment.author.username%></p>
-            <em>On <%=comment.date.toLocaleString("en-US")%></em>
-            <% if (currentUser && comment.author.id.equals(currentUser._id)) { %> 
-        <form id="delete-form" action="/blog/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-            <input type="submit" value="Delete Comment">
-        </form>
-        <% } %>
-        
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 didactic">
+            <h3 class="blog_name">"<%=blog.name%>" </h3>
+            <h4><%=blog.medium%> - <%=blog.year%> </h4>
+            <p> <%=blog.description%> </p>
+            <% if (currentUser && blog.author.id.equals(currentUser._id)) { %> 
+            <a href="/edit_blog/<%=blog._id %>">Edit this blog</a>
+            <form id="delete-form" action="/blog/<%=blog._id%>?_method=DELETE" method="POST">
+                <button id='del-blg-btn' class="btn btn-outline-danger">Delete Blog</button>
+            </form>
+            <% } %>
+        </div>
+         <div class="col-lg-9 col-md-3 col-sm-3">
+            <div class="container feature">
+                
+                    <img class="main-image" src="<%=blog.source%>" width="600px" alt="Blog post with image.">
+                    <div class="container">
+                        <div class="col-md-4">
+                            <% if (blog.comments.length <= 0) { %>
+                            <em>There are no comments on this blog.</em> 
+                            <% } else { %>
+                            <% blog.comments.forEach((comment) => { %>
+                            <div class="col-med-6 comment">
+                                <h4 id="commentText"> <%=comment.text%> </h4>
+                                <p id="submitted">Submitted by <%=comment.author.username%></p>
+                                <p id="submitDate">On <%=comment.date.toLocaleString()%></p>
+                                <% if (currentUser && comment.author.id.equals(currentUser._id)) { %> 
+                                <div class="col-md-3" >
+                                    <form id="delete-form" action="/blog/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                        <button id='del-com-btn' class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                </div>
+                                <hr>
+                                <% } %>
+                            </div>
+                            <% })} %>
+                        </div>
+                    <a type="button" class="btn btn-outline-warning"href="/comments/<%= blog._id %>">Leave a Comment!</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <% }) }%>
-    <a href="/comments/<%= blog._id %>">Leave a Comment!</a>
-    <% if (currentUser && blog.author.id.equals(currentUser._id)) { %> 
-    <form id="delete-form" action="/blog/<%=blog._id%>?_method=DELETE" method="POST">
-        <button>Delete Blog</button>
-    </form>
-    <% } %>
-</div>
-<p> <%=blog.description%> </p>
-<a href="/edit_blog/<%=blog._id %>">Edit this blog</a>
-
-
+ </div>
 <%- include ("./partials/footer") %>

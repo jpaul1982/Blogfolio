@@ -2,21 +2,25 @@
 <html lang="en">
 <head>
     <title>Paul's Blogfolio</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Questrial&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark"">
-        <a class="navbar-brand" href="/">M</a>
+    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark sticky-top">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav" class="collapse navbar-collapse" id="navbarNav">
-            <ul class="nav navbar-nav">
-              <li class="nav-item"><a class="nav-link" href="/index">See All Posts</a> </li>
+            <ul style="margin-left: 20px"class="nav navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="/"><i class="fab fa-fort-awesome"></i></a> </li>
+              <li style="margin-left: 10px"class="nav-item"><a class="nav-link" href="/index"><i class="fas fa-briefcase"></i></a> </li>
+              
           </ul>
         </div class="collapse navbar-collapse" id="navbarNav">
         <ul class="nav navbar-nav navbar-right ">
+          <li class="nav-item"><a class="nav-link" href="/about">About</a> </li>
           <% if(!currentUser) { %>
             <li ><a class="nav-link" href="/login" >Log In</a></li>
             <li><a class="nav-link"href="/register">Sign Up</a></li>

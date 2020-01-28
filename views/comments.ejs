@@ -1,19 +1,18 @@
 <%- include ("./partials/header") %>
-<h1>Leave a Comment! (new)</h1>
-<div class="card" style="width: 18rem;">
-    <img src="<%=blog.source%>" class="card-img-top" alt="Blog post with image.">
-    <div class="card-body">
-      <h4 class="card-title"><%=blog.name%></h4>
-      <h5 class="card-title"><%=blog.year%></h5>
-      <h5 class="card-title"><%=blog.medium%></h5>
-      <h5 class="card-title"><%=blog.comment%></h5>
-</div>
-  </div>
-  <form action="/comments/<%= blog._id %>" method="POST" id="post-form">
-    <input placeholder="Thoughts?" type="text" name="comment[text]"/><button type="submit" form="post-form">Post</button>
+<div class="container">
+  <div class="row">
+      <div id="comment_new" class="col-lg-6">
+        <h1>Tell me your thougts about "<%=blog.name%>"</h1>
+        <h5 ><%=blog.medium%> - <%=blog.year%></h5>
+        <form action="/comments/<%= blog._id %>" method="POST" id="post-form">
+          <input placeholder="Comments?" type="text" name="comment[text]"/><button style="margin-left: 10px" type="submit" form="post-form">Post</button>
+        </form>
+        <p id="comment_p">Feel free to share any comments you have about this post, I'd love to hear your opinion!</p>
+      </div>
+      <div class="col-lg-6 comment_image">
+        <img width="400px" src="<%=blog.source%>" alt="Blog post with image.">
+    </div>
     
-</form>
-
-  
-
+  </div>
+</div>
 <%- include ("./partials/footer") %>

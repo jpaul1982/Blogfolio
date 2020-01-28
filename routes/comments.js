@@ -5,9 +5,8 @@ Blog = require("../models/blog"),
 Comment = require("../models/comments"),
 
 // New //
+
 router.get("/comments/:id", middleware.isLoggedIn, (req, res) => {
-  console.log("Leave a comment");
-  
     Blog.findById(req.params.id, (err, foundBlog) => {
       if (err) {
         console.log("Something went wrong:", err);
@@ -36,7 +35,6 @@ router.post("/comments/:id", middleware.isLoggedIn, (req, res) => {
             blog.comments.push(comment);
             blog.save();
             console.log(comment);
-            
             res.redirect("/blog/" + blog._id);
           }
         });

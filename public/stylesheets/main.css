@@ -1,0 +1,102 @@
+body {
+    background-color: rgba(192, 234, 245, 0.5);
+    background-image: url("https://images.unsplash.com/photo-1541140134513-85a161dc4a00?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80");
+    background-repeat: no-repeat;
+    background-position:cover;
+    background-size: cover;
+    background-blend-mode: multiply;
+    font-family: 'Questrial', sans-serif;
+    margin-bottom: 15px;
+}
+.index_image {
+    object-fit: none;
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    margin-bottom: 40px;
+    transition: transform 2s 0s;
+    
+}
+.index_image:hover {
+
+   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+
+.didactic{
+    margin-top: 25px;
+}
+.main-image{
+margin-bottom: 10px;
+}
+.feature {
+    margin-top: 25px;
+    margin-left: 200px;
+}
+.blog_name {
+font-size: 40px;
+margin-left: 0px;
+}
+#del-blg-btn{
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+#del-com-btn{
+    margin-left: 500px;
+    margin-top: -120px;
+}
+.btn-warning{
+    margin-top: 15px;
+}
+.comment {
+    margin-top: 10px;
+}
+#submitDate {
+    margin-bottom: 0px;
+}
+ 
+#commentText{
+    margin-bottom: 0px;
+}
+#submitted{
+    margin-bottom: 0px;
+}
+#comment_new{
+    margin-top: 40px;
+}
+.comment_image {
+    margin-left: 600px;
+    margin-top: -190px;
+}
+#comment_p{
+    margin-top: 20px;
+    font-style: italic;
+}
+.col {
+    margin-left:-30px;
+}
+#index_subhead{
+    margin-bottom: 50px;
+    text-align: center;
+    margin-top: 25px;
+    font-size: 50px;
+}
+
+/* div.item.olive.index_image {
+    background-color: olive;
+} */
+
+div.item:hover img {
+    opacity: 0.5;
+    /* filter: grayscale(100%); */
+  }
+
+  div.item i {
+    transform: translate(-600%, -150%) scale(0);
+    transition: transform 300ms 0ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  }
+  
+  div.item:hover i {
+    transform: translate(-600%, -150%) scale(2.5);
+    transition: transform 300ms 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }

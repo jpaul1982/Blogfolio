@@ -17,6 +17,7 @@ const commentSchema = new mongoose.Schema({
     date: {
       type: Date,
       default: Date,
+      options : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
     },
 
       

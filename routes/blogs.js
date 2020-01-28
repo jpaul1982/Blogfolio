@@ -5,7 +5,6 @@ Blog = require("../models/blog"),
 
 // Index //
 router.get("/index", (req, res) => {
-  console.log(req.user);
   let query = Blog.find().sort({ _id: -1 });
   query.exec({}, (err, allBlogs) => {
     if (err) {
