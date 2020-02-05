@@ -8,7 +8,7 @@
             <% if (currentUser && blog.author.id.equals(currentUser._id)) { %> 
             <a href="/edit_blog/<%=blog._id %>">Edit this blog</a>
             <form id="delete-form" action="/blog/<%=blog._id%>?_method=DELETE" method="POST">
-                <button id='del-blg-btn' class="btn btn-outline-danger">Delete Blog</button>
+                <button id='del-blg-btn' class="btn btn-danger">Delete Blog</button>
             </form>
             <% } %>
         </div>
@@ -29,7 +29,7 @@
                                 <% if (currentUser && comment.author.id.equals(currentUser._id)) { %> 
                                 <div class="col-md-3" >
                                     <form id="delete-form" action="/blog/<%=blog._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                        <button id='del-com-btn' class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                        <button id='del-com-btn' class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                     </form>
                                 </div>
                                 <hr>
@@ -37,7 +37,7 @@
                             </div>
                             <% })} %>
                         </div>
-                    <a type="button" class="btn btn-outline-warning"href="/comments/<%= blog._id %>">Leave a Comment!</a>
+                    <a type="button" class="btn btn-warning"href="/comments/<%= blog._id %>">Leave a Comment!</a>
                 </div>
             </div>
         </div>
