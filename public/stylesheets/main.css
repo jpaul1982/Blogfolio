@@ -205,28 +205,32 @@ div.item * {
   }
   
   @media screen and (max-width: 640px) {
-    .index_image {
-        width: 250px;
-        height: 250px;
     
-    }
-    .grid{
-        
-    }
- }
-
- @media screen and (max-width: 992px) {
-    .index_image {
-        width: 250px;
-        height: 250px;
-    }
+    
  }
  @media screen and (max-width: 772px) {
     #index_subhead {
-        font-size: 35px;
+        font-size: 50px;
+        display: flex;
+        flex-wrap: nowrap;
     }
     .index_image {
         width: 175px;
         height: 175px;
+    }
+ }
+
+ @media screen and (max-width: 992px) {
+    .item {
+        margin-left: 170px;
+        width: 500px;
+        height: 500px;
+    }
+    .item i{
+        margin-left: -70px;
+    }
+    .index_image {
+        width: 350px;
+        height: 350px;
     }
  }
