@@ -7,50 +7,140 @@ body {
     background-blend-mode: multiply;
     font-family: 'Questrial', sans-serif;
     margin: 0px 0px 15px 0px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+ }
+
+.blog {
+    margin-top: 40px;
+    display: flex;
 }
 
-.didactic{
-    margin-top: 25px;
+.blog_info {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 500px;
+    width: 300px;
 }
-.main-image {
-margin-bottom: 10px;
+.blog_info p {
+    display: flex;
+    width: 380px;
+}
+.blog_img img {
+    display: flex;
+    width: 600px;
+    margin-top: 80px;
+    flex-wrap: nowrap;
+    margin-bottom: 20px;
+}
+.comment {
+    margin-top: 10px;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    align-items: flex-start;
+}
+.comment button {
+    margin-top: 10px;
+}
+.comment_btn{
+    margin-top: 10px;
+    
+}
+.comment h4{
+    display: flex;
+    width: 500px;
 }
 @media screen and (max-width: 1200px) {
-    .main-image {
-        width: 400px;
-        height: 500px;
+    .blog_img img ,p{
+        width: 500px;
+    
     }
  }
-.feature {
-    margin-top: 25px;
-    margin-left: 200px;
+ @media screen and (max-width: 990px) {
+    .blog {
+        display: flex;
+        flex-direction: column-reverse;
+        flex-wrap: wrap;
+    }
+    .blog_img img{
+        width: 350px;
+        margin-top: -20px;
+        margin-left: -20px;
+
+    }
+    .blog_img{
+        display: flex;
+        width: 350px;
+        align-items: flex-start;
+    }
+    .blog_info p{
+        width: 600px;
+    }
+    .comment{
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 25px;
+    }
+ }
+ @media screen and (max-width: 640px) {
+    .blog {
+        display: flex;
+        flex-direction: column-reverse;
+        flex-wrap: wrap;
+        
+    }
+    .blog_img img{
+        width: 250px;
+        margin-top: -20px;
+        margin-left: -20px;
+
+    }
+    .blog_img{
+        display: flex;
+        width: 350px;
+        align-items: flex-start;
+    }
+    .blog_info p{
+        width: 500px;
+    }
+    .comment,p{
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 25px;
+        font-size: 15px;
+    }
+    #commentText{
+        font-size: 20px;
+        margin-left: 25px;
+
+    }
+    .comment_btn{
+        width: 105px;
+        margin-left: 25px;
+    }
 }
-.blog_name {
-font-size: 40px;
-margin-left: 0px;
-}
+
 #del-blg-btn{
     margin-bottom: 0px;
     margin-top: 20px;
 }
-#del-com-btn{
-    margin-left: 500px;
-    margin-top: -120px;
-}
+
 .btn-warning{
     margin-top: 15px;
 }
-.comment {
-    margin-top: 10px;
-  
-}
+
 #submitDate {
     margin-bottom: 0px;
 }
- 
-#commentText{
-    margin-bottom: 0px;
+
+#userName{
+    font-weight: 900;
+    font-size: 20px;
 }
+ 
 #submitted{
     margin-bottom: 0px;
 }
@@ -65,19 +155,26 @@ margin-left: 0px;
     margin-top: 20px;
     font-style: italic;
 }
+#commentText{
+    font-weight: bold;
+}
 .col {
     margin-left:-30px;
 }
+
+/* Index */
+
 #index_subhead{
     margin-bottom: 50px;
     text-align: center;
     margin-top: 25px;
-    font-size: 50px;
+    font-size: 80px;
+    padding: 10px;
+}
+#index_subhead i{
+    padding: 20px;
 }
 
-/* div.item.green {
-    background-color: seagreen;
-} */
 div.item:hover img {
     opacity: 0.5;
     filter: grayscale(50%);
@@ -98,19 +195,23 @@ div.item * {
    transition: all .35s ease-in-out;
   }
 .index_image {
-    object-fit: none;
+    object-fit: cover;
     width: 200px;
     height: 200px;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 40px;
+    padding: 10px;
     
   }
-
-  @media screen and (max-width: 600px) {
+  
+  @media screen and (max-width: 640px) {
     .index_image {
-        margin-left: 100px;
         width: 250px;
         height: 250px;
+    
+    }
+    .grid{
+        
     }
  }
 
@@ -120,4 +221,12 @@ div.item * {
         height: 250px;
     }
  }
- 
+ @media screen and (max-width: 772px) {
+    #index_subhead {
+        font-size: 35px;
+    }
+    .index_image {
+        width: 175px;
+        height: 175px;
+    }
+ }

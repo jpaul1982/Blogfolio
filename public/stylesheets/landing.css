@@ -8,8 +8,8 @@ body {
     background-blend-mode: multiply;
 }
 
+
 .header {
-    /* background-color: rgba(241, 242, 243, 0.37); */
     margin: 100px 0px 0px 35px;
     height: 500px;
     width: 300px;
@@ -19,7 +19,7 @@ body {
 .display-4 {
     font-family: 'Cinzel', serif;
     font-size: 5em;
-   margin-top: -50px;
+    margin-top: -50px;
 }
 
 .lead {
