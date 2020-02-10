@@ -12,9 +12,20 @@ const express           = require("express"),
       commentRoutes     = require("./routes/comments"),
       indexRoutes       = require("./routes/index");
 
-mongoose.connect("mongodb://localhost:27017/blogfolio", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+// mongoose.connect("mongodb://localhost:27017/blogfolio", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
+
+mongoose.connect("mongodb+srv://paulMolnar:Vitruvian12358@cluster0-escy8.mongodb.net/test?retryWrites=true&w=majority", {
+  useNewUrlParser:true,
+  useCreateIndex:true,
+}).then(() => {
+  console.log("Connected to DB!");
+  
+}).catch(err => {
+  console.log("Error:", err.message);
+  
 });
 
 /////// Passport Config ////////////
