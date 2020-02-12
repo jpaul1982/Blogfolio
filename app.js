@@ -17,7 +17,7 @@ const express           = require("express"),
 //   useUnifiedTopology: true
 // });
 
-mongoose.connect("mongodb+srv://paulMolnar:Vitruvian12358@cluster0-escy8.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://paulMolnar:Vitruvian12358@cluster0-1qme8.mongodb.net/test?retryWrites=true&w=majority", {
   useNewUrlParser:true,
   useCreateIndex:true,
 }).then(() => {
